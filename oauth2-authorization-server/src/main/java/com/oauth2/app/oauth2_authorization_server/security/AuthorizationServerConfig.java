@@ -3,7 +3,6 @@ package com.oauth2.app.oauth2_authorization_server.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -19,8 +18,12 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.UUID;
 
 @Configuration
@@ -65,17 +68,46 @@ public class AuthorizationServerConfig {
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        OAuth2AuthorizationServerConfigurer auth2AuthorizationServerConfigurer = new
-                OAuth2AuthorizationServerConfigurer();
-        RequestMatcher endPointMatcher = auth2AuthorizationServerConfigurer
-                .getEndpointsMatcher();
+        OAuth2AuthorizationServerConfigurer auth2AuthorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
+        RequestMatcher endPointMatcher = auth2AuthorizationServerConfigurer.getEndpointsMatcher();
+
         httpSecurity.securityMatcher(endPointMatcher)
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .csrf(csrf -> csrf.ignoringRequestMatchers(endPointMatcher))
                 .apply(auth2AuthorizationServerConfigurer);
-        /** enabled default forms login **/
-        httpSecurity.formLogin(Customizer.withDefaults());
+
+        httpSecurity.formLogin(loginForm -> loginForm.loginPage("/login").permitAll());
         return httpSecurity.build();
     }
 
+    @Bean
+    @Order(2)
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .successHandler(customAuthenticationEntryPoint())
+                        .permitAll()
+                );
+
+        return httpSecurity.build();
+    }
+
+    /** custom authentication handle if success request from client or not **/
+    @Bean
+    public AuthenticationSuccessHandler customAuthenticationEntryPoint() {
+        return (request, response, authentication) -> {
+            SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
+            if (!Objects.isNull(savedRequest)){
+                /** if request from client will redirect to authentication code **/
+                String targetUrl = savedRequest.getRedirectUrl();
+                response.sendRedirect(targetUrl);
+            }else{
+                /** if request from internal will redirect internal dashboard **/
+                response.sendRedirect("/dashboard");
+            }
+        };
+    }
 }
