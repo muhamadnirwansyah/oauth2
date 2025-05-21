@@ -48,12 +48,3 @@ CREATE TABLE oauth2_authorization_consent (
     PRIMARY KEY (registered_client_id, principal_name)
 );
 
---1 get code
--- http://localhost:10000/oauth2/authorize?response_type=code&client_id=angular-client&redirect_uri=http://localhost:4200/callback&scope=read
---2 authorization code get token
--- http://localhost:10000/oauth2/token
---header 'Content-Type: application/x-www-form-urlencoded'
---header 'Authorization: Basic YW5ndWxhci1jbGllbnQ6c2VjcmV0' \
---data-urlencode 'grant_type=authorization_code' \
---data-urlencode 'code=-MtioXKW30kaYv2wiTQWnqpiQNJEG3zeouLSK5e6D9ElBKaWgzNQlLHjOK7klBltycMlcjTK8FQOuXrmdjLj0AW1Xsg9R7aF3f81rM9FlS3PLNOi5hIRNhwXQGQwVyO4' \
---data-urlencode 'redirect_uri=http://localhost:4200/callback'
