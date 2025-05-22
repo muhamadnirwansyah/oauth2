@@ -1,0 +1,39 @@
+<!-- src/main/resources/templates/default-success.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title layout:title-pattern="$LAYOUT_TITLE - Dashboard">Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/form-table.css}"/>
+    <link rel="stylesheet" th:href="@{/css/popup-message.css}"/>
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <h1 class="logo">Auth Server Configuration</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a th:href="@{/dashboard}" th:classappend="${currentUri == '/dashboard'} ? 'active' : ''">Dashboard</a></li>
+                    <li><a th:href="@{/account}" th:classappend="${currentUri == '/account'} ? 'active' : ''">Account</a></li>
+                    <li><a th:href="@{/roles}" th:classappend="${currentUri == '/roles'} ? 'active' : ''">Roles</a></li>
+                    <li><a th:href="@{/client}" th:classappend="${currentUri == '/client'} ? 'active' : ''">Client</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!--start layout-->
+    <main layout:fragment="content" class="container">
+        <!--load content here-->
+    </main>
+    <!--end layout-->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Spring OAUTH2. All rights reserved.</p>
+        </div>
+    </footer>
+    <script th:src="@{/js/custom.js}"></script>
+</body>
+</html>

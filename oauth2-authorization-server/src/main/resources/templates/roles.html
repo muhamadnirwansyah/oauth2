@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}">
+<head>
+    <title>Management Roles</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <h3>Management Roles</h3>
+
+    <!--modal popup if success -->
+    <div th:if="${successMessage}" id="successMessage" class="modal-overlay">
+        <div class="modal-content">
+            <p th:text="${successMessage}"></p>
+            <button type="button">Close</button>
+        </div>
+    </div>
+
+    <!--modal popup if failed -->
+    <div th:if="${errorMessage}" id="errorModal" class="modal-overlay">
+        <div class="modal-content" style="border-left: 6px solid #e74c3c;">
+            <p th:text="${errorMessage}" style="color: #e74c3c;"></p>
+            <button type="button">Close</button>
+        </div>
+    </div>
+
+    <!--Roles form-->
+    <form th:action="@{/save-roles}" th:object="${role}" method="post" class="form-box">
+       <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" id="id" th:field="*{id}" placeholder="Enter ID" class="form-control" readonly/>
+       </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" placeholder="Enter Roles Name" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+    <!--table roles-->
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th style="padding-left: 500px">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="roleBinding : ${roles}">
+                    <td th:text="${roleBinding.id}">1</td>
+                    <td th:text="${roleBinding.name}">Custom Admin</td>
+                    <td style="padding-left: 500px">
+                        <button type="button" class="btn btn-primary update-button"
+                                th:attr="data-id=${roleBinding.id},data-name=${roleBinding.name}"
+                        >Update</button>
+                        <button type="button" class="btn btn-primary delete-button"
+                            th:attr="data-id=${roleBinding.id}">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

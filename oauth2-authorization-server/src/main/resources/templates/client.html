@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard}">
+<head>
+    <title>Client Configuration</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <h2>Management Clients</h2>
+    <!--form clients-->
+    <form method="post" class="form-box" th:object="${client}">
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" id="id" th:field="*{id}" class="form-control" readonly placeholder="Enter ID"/>
+        </div>
+        <div class="form-group">
+            <label for="clientId">Client ID</label>
+            <input type="text" id="clientId" th:field="*{clientId}" class="form-control" placeholder="Enter Client ID"/>
+        </div>
+        <div class="form-group">
+            <label for="clientSecret">Client Secret</label>
+            <input type="text" id="clientSecret" th:field="*{clientSecret}" class="form-control" placeholder="Enter Client Secret"/>
+        </div>
+        <div class="form-group">
+            <label for="scopes">Scopes (Comma separated)</label>
+            <input type="text" id="scopes" th:field="*{scopes}" class="form-control" placeholder="Enter Scopes"/>
+        </div>
+        <div class="form-group">
+            <label for="accessTokenHours">Access Token Hours</label>
+            <input type="number" id="accessTokenHours" th:field="*{accessTokenHours}" class="form-control" placeholder="Enter expires access token hours"/>
+        </div>
+        <div class="form-group">
+            <label for="refreshTokenDays">Refresh Token</label>
+            <input type="number" id="refreshTokenDays" th:field="*{refreshTokenDays}" class="form-control" placeholder="Enter expires refresh token"/>
+        </div>
+        <div class="form-group">
+            <label for="redirectUri">Redirect URL</label>
+            <input type="text" id="redirectUri" th:field="*{redirectUri}" class="form-control" placeholder="Enter Redirect URL"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+    <!--table clients-->
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Client ID</th>
+                    <th>Client Secret</th>
+                    <th>Scopes</th>
+                    <th>Redirect Url</th>
+                    <th>Access Token (Hours)</th>
+                    <th>Refresh Token (Days)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="clientBinding : ${clients}">
+                    <td th:text="${clientBinding.id}"></td>
+                    <td th:text="${clientBinding.clientId}"></td>
+                    <td th:text="${clientBinding.clientSecret}"></td>
+                    <td th:text="${clientBinding.scope}"></td>
+                    <td th:text="${clientBinding.redirectUri}"></td>
+                    <td th:text="${clientBinding.accessTokenHours}"></td>
+                    <td th:text="${clientBinding.refreshTokenDays}"></td>
+                    <td>
+                        <button type="button" class="btn btn-primary">Edit</button>
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

@@ -1,3 +1,4 @@
+--oauth2 registered client
 CREATE TABLE oauth2_registered_client (
     id VARCHAR(100) PRIMARY KEY,
     client_id VARCHAR(100) NOT NULL,
@@ -10,7 +11,8 @@ CREATE TABLE oauth2_registered_client (
     redirect_uris TEXT,
     scopes TEXT,
     client_settings TEXT NOT NULL,
-    token_settings TEXT NOT NULL
+    token_settings TEXT NOT NULL,
+    post_logout_redirect_uris VARCHAR(1000)
 );
 
 CREATE TABLE oauth2_authorization (
