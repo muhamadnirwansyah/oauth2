@@ -22,7 +22,7 @@ tapi di project ini, resource-server saya gabung dengan project oauth2-authoriza
 
 ![oauth2_authorization_server_client drawio](https://github.com/user-attachments/assets/d0785c06-867c-4452-9093-25a6ab51633c)
 
-# Capture Process
+# Capture Process by images
 
 1. user ingin mengakes api ke authorization client (resource access)
   `http://localhost:8081/oauth2/authorization/angular-client`dari authorization client, akan diredirect, user ke halaman login `http://localhost:10000/login`
@@ -62,6 +62,10 @@ tapi di project ini, resource-server saya gabung dengan project oauth2-authoriza
    negative case jika token tidak dibawa di sisi header
 
    <img width="854" alt="image" src="https://github.com/user-attachments/assets/41382f36-1edc-4b85-a541-04ba89798faa" />
+
+# Penjelasan berdasarkan video
+
+ bagi teman-teman yang ingin melihat detailnya, bisa lihat di youtube milik saya di url berikut ini -> 
 
 
 
