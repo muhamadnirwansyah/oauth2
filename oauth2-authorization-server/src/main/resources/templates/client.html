@@ -8,11 +8,28 @@
 <body>
 <main layout:fragment="content">
     <h2>Management Clients</h2>
+
+    <!--modal popup if success -->
+    <div th:if="${successMessage}" id="successMessage" class="modal-overlay">
+        <div class="modal-content">
+            <p th:text="${successMessage}"></p>
+            <button type="button">Close</button>
+        </div>
+    </div>
+
+    <!--modal popup if failed -->
+    <div th:if="${errorMessage}" id="errorModal" class="modal-overlay">
+        <div class="modal-content" style="border-left: 6px solid #e74c3c;">
+            <p th:text="${errorMessage}" style="color: #e74c3c;"></p>
+            <button type="button">Close</button>
+        </div>
+    </div>
+
     <!--form clients-->
-    <form method="post" class="form-box" th:object="${client}">
+    <form method="post" class="form-box" th:action="@{/save-client}" th:object="${client}">
         <div class="form-group">
-            <label for="id">ID</label>
-            <input type="text" id="id" th:field="*{id}" class="form-control" readonly placeholder="Enter ID"/>
+            <label for="primaryIdClient">ID</label>
+            <input type="text" id="primaryIdClient" th:field="*{id}" class="form-control" readonly placeholder="Enter ID"/>
         </div>
         <div class="form-group">
             <label for="clientId">Client ID</label>
@@ -47,28 +64,39 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Client ID</th>
-                    <th>Client Secret</th>
-                    <th>Scopes</th>
-                    <th>Redirect Url</th>
-                    <th>Access Token (Hours)</th>
-                    <th>Refresh Token (Days)</th>
-                    <th>Action</th>
+                    <th style="white-space: nowrap;">ID</th>
+                    <th style="white-space: nowrap;">Client ID</th>
+                    <th style="white-space: nowrap;">Client Secret</th>
+                    <th style="white-space: nowrap;">Scopes</th>
+                    <th style="white-space: nowrap;">Redirect Url</th>
+                    <th style="white-space: nowrap;">Access Token (Hours)</th>
+                    <th style="white-space: nowrap;">Refresh Token (Days)</th>
+                    <th style="white-space: nowrap;">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="clientBinding : ${clients}">
-                    <td th:text="${clientBinding.id}"></td>
-                    <td th:text="${clientBinding.clientId}"></td>
-                    <td th:text="${clientBinding.clientSecret}"></td>
-                    <td th:text="${clientBinding.scope}"></td>
-                    <td th:text="${clientBinding.redirectUri}"></td>
-                    <td th:text="${clientBinding.accessTokenHours}"></td>
-                    <td th:text="${clientBinding.refreshTokenDays}"></td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Edit</button>
-                        <button type="button" class="btn btn-primary">Delete</button>
+                    <td style="white-space: nowrap;" th:text="${clientBinding.id}"></td>
+                    <td style="white-space: nowrap;" th:text="${clientBinding.clientId}"></td>
+                    <td style="white-space: nowrap;" th:text="${clientBinding.clientSecret}"></td>
+                    <td style="white-space: nowrap;" th:text="${clientBinding.scope}"></td>
+                    <td style="white-space: nowrap;" th:text="${clientBinding.redirectUri}"></td>
+                    <td style="white-space: nowrap;" th:text="${clientBinding.accessTokenHours}"></td>
+                    <td style="white-space: nowrap;" th:text="${clientBinding.refreshTokenDays}"></td>
+                    <td style="white-space: nowrap;">
+                        <button type="button"
+                                th:attr="
+                                data-primaryIdClient=${clientBinding.id},
+                                data-clientId=${clientBinding.clientId},
+                                data-clientSecret=${clientBinding.clientSecret},
+                                data-scopes=${clientBinding.scope},
+                                data-redirectUri=${clientBinding.redirectUri},
+                                data-accessTokenHours=${clientBinding.accessTokenHours},
+                                data-refreshTokenDays=${clientBinding.refreshTokenDays}"
+                                class="btn btn-primary edit-button-client">Edit</button>
+                        <button type="button"
+                                th:attr="data-primaryIdClient=${clientBinding.id}"
+                                class="btn btn-primary delete-button-client">Delete</button>
                     </td>
                 </tr>
             </tbody>

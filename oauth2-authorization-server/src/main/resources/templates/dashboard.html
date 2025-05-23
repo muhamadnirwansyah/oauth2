@@ -27,6 +27,15 @@
     <!--start layout-->
     <main layout:fragment="content" class="container">
         <!--load content here-->
+        <div class="card shadow-sm rounded">
+            <div class="card-body">
+                <h3 class="card-title">Hello, <span th:text="${username}">Username</span></h3>
+                <p class="card-text">
+                    Your roles:
+                    <span th:each="role : ${authorities}" class="badge bg-primary me-1" th:text="${role.getAuthority()}">ROLE</span>
+                </p>
+            </div>
+        </div>
     </main>
     <!--end layout-->
     <footer>

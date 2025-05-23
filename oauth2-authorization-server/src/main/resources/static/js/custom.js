@@ -33,6 +33,39 @@ window.addEventListener('DOMContentLoaded', () => {
        });
     });
 
+    document.querySelectorAll('.btn-edit-account').forEach(button => {
+        button.addEventListener('click', () => {
+            const idAccount = button.getAttribute('data-idAccount');
+            const idRoles = button.getAttribute('data-idRoles');
+            const rolesName = button.getAttribute('data-roles');
+            const username = button.getAttribute('data-username');
+            const email = button.getAttribute('data-email');
+            document.getElementById('idAccount').value = idAccount;
+            document.getElementById('rolesId').value = idRoles;
+            document.getElementById('username').value = username;
+            document.getElementById('email').value = email;
+        });
+    });
+
+    document.querySelectorAll('.edit-button-client').forEach(button => {
+        button.addEventListener('click', () => {
+            const primaryIdClient = button.getAttribute('data-primaryIdClient');
+            const clientId = button.getAttribute('data-clientId');
+            const clientSecret = button.getAttribute('data-clientSecret');
+            const scopes = button.getAttribute('data-scopes');
+            const redirectUri = button.getAttribute('data-redirectUri');
+            const accessTokenHours = button.getAttribute('data-accessTokenHours');
+            const refreshTokenDays = button.getAttribute('data-refreshTokenDays');
+            document.getElementById('primaryIdClient').value = primaryIdClient;
+            document.getElementById('clientId').value = clientId;
+            document.getElementById('clientSecret').value = clientSecret;
+            document.getElementById('scopes').value = scopes;
+            document.getElementById('redirectUri').value = redirectUri;
+            document.getElementById('accessTokenHours').value = accessTokenHours;
+            document.getElementById('refreshTokenDays').value = refreshTokenDays;
+        });
+    })
+
     document.querySelectorAll('.delete-button').forEach(button => {
        button.addEventListener('click', () => {
             const roleId = button.getAttribute("data-id");
@@ -41,5 +74,25 @@ window.addEventListener('DOMContentLoaded', () => {
                 window.location.href = `/delete-role/${roleId}`;
             }
        });
+    });
+
+    document.querySelectorAll('.btn-delete-account').forEach(button => {
+        button.addEventListener('click', () => {
+            const idAccount = button.getAttribute('data-idAccount');
+            const confirmDelete = confirm(`are you sure, you want delete this account ?`);
+            if (confirmDelete){
+                window.location.href = `delete-account/${idAccount}`;
+            }
+        });
+    });
+
+    document.querySelectorAll('.delete-button-client').forEach(button => {
+        button.addEventListener('click', () => {
+            const idClientPrimary = button.getAttribute('data-primaryIdClient');
+            const confirmDelete = confirm(`are you sure, you want delete this client ?`);
+            if (confirmDelete){
+                window.location.href = `/delete-client/${idClientPrimary}`;
+            }
+        }) ;
     });
 });
