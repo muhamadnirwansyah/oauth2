@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/oauth2/code")
-public class Oauth2ClientController {
+public class Oauth2CallbackClientController {
 
     @GetMapping("/angular-client")
     public ResponseEntity<String> clientCode(@RequestParam("code")String code) {

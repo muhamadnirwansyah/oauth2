@@ -21,8 +21,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer
+                .ignoringRequestMatchers("/api/v1/**"));
        httpSecurity.authorizeHttpRequests(authorize -> authorize
-                       .requestMatchers("/api/v1/secure/**").authenticated()
+                       .requestMatchers("/api/v1/**").authenticated()
                        .requestMatchers("/oauth2/**", "/login/**", "/error").permitAll()
                        .anyRequest().authenticated())
                .oauth2Login(oauth2 -> oauth2

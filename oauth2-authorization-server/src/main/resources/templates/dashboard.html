@@ -1,4 +1,3 @@
-<!-- src/main/resources/templates/default-success.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -20,6 +19,11 @@
                     <li><a th:href="@{/account}" th:classappend="${currentUri == '/account'} ? 'active' : ''">Account</a></li>
                     <li><a th:href="@{/roles}" th:classappend="${currentUri == '/roles'} ? 'active' : ''">Roles</a></li>
                     <li><a th:href="@{/client}" th:classappend="${currentUri == '/client'} ? 'active' : ''">Client</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -27,6 +31,15 @@
     <!--start layout-->
     <main layout:fragment="content" class="container">
         <!--load content here-->
+        <div class="card shadow-sm rounded">
+            <div class="card-body">
+                <h3 class="card-title">Hello, <span th:text="${username}">Username</span></h3>
+                <p class="card-text">
+                    Your roles:
+                    <span th:each="role : ${authorities}" class="badge bg-primary me-1" th:text="${role.getAuthority()}">ROLE</span>
+                </p>
+            </div>
+        </div>
     </main>
     <!--end layout-->
     <footer>

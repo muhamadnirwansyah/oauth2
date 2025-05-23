@@ -7,7 +7,89 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <h2>Management Account</h2>
+    <h3>Management Account</h3>
+
+    <!--modal popup if success -->
+    <div th:if="${successMessage}" id="successMessage" class="modal-overlay">
+        <div class="modal-content">
+            <p th:text="${successMessage}"></p>
+            <button type="button">Close</button>
+        </div>
+    </div>
+
+    <!--modal popup if failed -->
+    <div th:if="${errorMessage}" id="errorModal" class="modal-overlay">
+        <div class="modal-content" style="border-left: 6px solid #e74c3c;">
+            <p th:text="${errorMessage}" style="color: #e74c3c;"></p>
+            <button type="button">Close</button>
+        </div>
+    </div>
+
+    <!--account form-->
+    <form th:action="@{/save-account}" th:object="${account}" method="post">
+        <div class="form-group">
+            <label for="idAccount">ID</label>
+            <input type="text" class="form-control" th:field="*{id}" id="idAccount" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="rolesId">Role</label>
+            <select th:field="*{rolesId}" id="rolesId" class="form-control">
+                <option value="">Select Roles</option>
+                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" th:field="*{username}" id="username" placeholder="Enter your username" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" th:field="*{email}" class="form-control" id="email" placeholder="Enter your email"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Enter your password"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+    <!--table accounts-->
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th style="white-space: nowrap;">ID</th>
+                    <th style="white-space: nowrap;">Roles ID</th>
+                    <th style="white-space: nowrap;">Role</th>
+                    <th style="white-space: nowrap;">Username</th>
+                    <th style="white-space: nowrap;">Email</th>
+                    <th style="white-space: nowrap;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="account : ${accounts}">
+                    <td th:text="${account.id}"></td>
+                    <td th:text="${account.idRoles}"></td>
+                    <td th:text="${account.roles}"></td>
+                    <td th:text="${account.username}"></td>
+                    <td th:text="${account.email}"></td>
+                    <td>
+                        <button type="button"
+                                th:attr="data-idAccount=${account.id},
+                                data-roles=${account.roles},
+                                data-idRoles=${account.idRoles},
+                                data-username=${account.username},
+                                data-email=${account.email}"
+                                class="btn btn-primary btn-edit-account">Edit</button>
+                        <button type="button"
+                                th:attr="data-idAccount=${account.id}"
+                                class="btn btn-primary btn-delete-account">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 </body>
 </html>
