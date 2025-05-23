@@ -65,10 +65,8 @@ public class AuthorizationServerConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(authorize -> authorize
-                        //.requestMatchers("/api/v1.0/**").permitAll()
                         .requestMatchers("/css/**", "/client", "/account", "/roles").authenticated()
                         .anyRequest().authenticated())
-                //.csrf(csrf -> csrf.ignoringRequestMatchers("/api/v1.0/**"))
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
