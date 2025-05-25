@@ -65,7 +65,7 @@ tapi di project ini, resource-server saya gabung dengan project oauth2-authoriza
 
 # Penjelasan berdasarkan video
 
- bagi teman-teman yang ingin melihat detailnya, bisa lihat di youtube milik saya di url berikut ini -> 
+ bagi teman-teman yang ingin melihat detailnya, bisa lihat di youtube milik saya di url berikut ini -> https://www.youtube.com/watch?v=FeSOuDzqljI
 
 
 
